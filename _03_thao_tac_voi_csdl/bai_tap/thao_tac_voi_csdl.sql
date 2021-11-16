@@ -37,18 +37,11 @@ INNER JOIN `order` O on O.o_id = Od.o_id
 INNER JOIN customer C on C.c_id = O.c_id;
 
 -- Hiển thị tên những khách hàng không mua bất kỳ một sản phẩm nào
-SELECT C.c_name as ten_khanh_hang , COUNT(Od.o_id) as so_lan_mua_san_pham
-FROM order_detail Od 
-INNER JOIN product P on Od.p_id = P.p_id
-INNER JOIN `order` O on O.o_id = Od.o_id
-RIGHT JOIN customer C on C.c_id = O.c_id
-GROUP BY C.c_id
-HAVING COUNT(Od.o_id)= 0;
+select C.c_name , O.o_id
+from `order` O
+right join customer C On C.c_id = O.c_id
+where O.c_id is NULL;
 
 -- Hiển thị mã hóa đơn, ngày bán và giá tiền của từng hóa đơn (giá một hóa đơn được tính bằng tổng giá bán của từng loại mặt hàng xuất hiện trong hóa đơn. 
 -- Giá bán của từng loại được tính = odQTY*pPrice)
-SELECT O.o_id , O.o_date , sum(Od.od_qty* P.p_price) as tong_gia
-FROM order_detail Od 
-INNER JOIN product P on Od.p_id = P.p_id
-INNER JOIN `order` O on O.o_id = Od.o_id
-GROUP BY Od.o_id;
+-- block 
