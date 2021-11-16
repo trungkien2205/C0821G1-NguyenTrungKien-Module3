@@ -44,4 +44,8 @@ where O.c_id is NULL;
 
 -- Hiển thị mã hóa đơn, ngày bán và giá tiền của từng hóa đơn (giá một hóa đơn được tính bằng tổng giá bán của từng loại mặt hàng xuất hiện trong hóa đơn. 
 -- Giá bán của từng loại được tính = odQTY*pPrice)
--- block 
+SELECT O.o_id , O.o_date , sum(Od.od_qty* P.p_price) as tong_gia
+FROM order_detail Od 
+INNER JOIN product P on Od.p_id = P.p_id
+INNER JOIN `order` O on O.o_id = Od.o_id
+GROUP BY Od.o_id;
